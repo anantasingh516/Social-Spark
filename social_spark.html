@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Social Spark - Post Generator</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #7f00ff, #00bcd4);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+      max-width: 500px;
+      width: 100%;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-size: 28px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      background-color: #7f00ff;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #6200cc;
+    }
+
+    .output {
+      margin-top: 30px;
+      display: none;
+    }
+
+    .generated-text {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      word-wrap: break-word;
+    }
+
+    .copy-btn {
+      background-color: #4CAF50;
+      margin-top: 10px;
+    }
+
+    .copy-message {
+      color: green;
+      margin-top: 10px;
+      display: none;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo">⚡ Social Spark</div>
+    <p class="subtitle">Generate a catchy social media post for your idea or product!</p>
+    
+    <input id="productInput" type="text" placeholder="Enter your product name or idea...">
+    <button onclick="generatePost()">Generate Post</button>
+
+    <div id="output" class="output">
+      <h3>Generated Post:</h3>
+      <div id="postContent" class="generated-text"></div>
+      <button class="copy-btn" onclick="copyPost()">Copy to Clipboard</button>
+      <div id="copyMessage" class="copy-message">Copied to clipboard!</div>
+    </div>
+  </div>
+
+  <script>
+    function generatePost() {
+      const product = document.getElementById('productInput').value.trim();
+      const outputDiv = document.getElementById('output');
+      const postContent = document.getElementById('postContent');
+      const copyMessage = document.getElementById('copyMessage');
+
+      if (!product) {
+        postContent.innerHTML = "Please enter a product or idea!";
+        outputDiv.style.display = 'block';
+        copyMessage.style.display = 'none';
+        return;
+      }
+
+      const captions = [
+        Introducing **${product}** – changing the way you live! #Innovation #${product.replace(/\s+/g, '')},
+        Can't stop thinking about ${product}? Neither can we. Join the movement! #TrendingNow,
+        Upgrade your life with ${product}. Because you deserve the best! #LifestyleGoals,
+        Say hello to the revolution: ${product}! #NextBigThing,
+        ${product} is here to spark your dreams into reality! #DreamBig
+      ];
+
+      const randomIndex = Math.floor(Math.random() * captions.length);
+      postContent.innerHTML = captions[randomIndex];
+      outputDiv.style.display = 'block';
+      copyMessage.style.display = 'none';
+    }
+
+    function copyPost() {
+      const text = document.getElementById('postContent').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const copyMessage = document.getElementById('copyMessage');
+        copyMessage.style.display = 'block';
+        setTimeout(() => copyMessage.style.display = 'none', 2000);
+      });
+    }
+  </script>
+</body>
+</html>
